@@ -1,4 +1,4 @@
-# 📚 Dashboard Literário: Um Guia Tecnológico sobre os Clássicos da Literatura Brasileira
+# Dashboard Literário: Um Guia Tecnológico sobre os Clássicos da Literatura Brasileira
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![ODS 4](https://img.shields.io/badge/ODS%204-Educa%C3%A7%C3%A3o%20de%20Qualidade-C5192D.svg)](https://brasil.un.org/pt-br/sdgs/4)
@@ -21,7 +21,7 @@ Utilizando técnicas de estilometria computacional, o projeto comprova e ilustra
 
 ---
 
-## 🎯 Escopo dos Autores Analisados
+##  Escopo dos Autores Analisados
 
 | Autor | Obra Canônica | Foco da Análise Computacional | Métrica Principal Identificada |
 | :--- | :--- | :--- | :---: |
@@ -35,7 +35,7 @@ Utilizando técnicas de estilometria computacional, o projeto comprova e ilustra
 
 ---
 
-## 🚀 Como Executar o Projeto Localmente
+##  Como Executar o Projeto Localmente
 
 ### 1. Clonar o Repositório
 ```bash
@@ -64,7 +64,7 @@ Acesse no seu navegador: **`http://localhost:8501`**
 
 ---
 
-## 📁 Estrutura de Diretórios
+##  Estrutura de Diretórios
 
 ```
 dashboard_literario/
@@ -88,14 +88,14 @@ dashboard_literario/
 
 ---
 
-## 🖨️ Produto Comunitário (Entrega de Extensão)
+##  Produto Comunitário (Entrega de Extensão)
 
 O projeto disponibiliza um **Relatório Técnico-Educativo** completo pronto para uso em sala de aula e divulgação comunitária em:
 * [`reports/relatorio_educativo.html`](reports/relatorio_educativo.html) *(abra no navegador e aperte `Ctrl + P` para gerar o PDF institucional com formatação diagramada)*.
 
 ---
 
-## 👨‍💻 Autor & Agradecimentos
+##  Autor & Agradecimentos
 
 * **Luis Gustavo Rocha Lima**
 * **1º Semestre** · Bacharelado em Ciência de Dados
