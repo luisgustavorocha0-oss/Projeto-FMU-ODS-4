@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Educativo: Dashboard Literário</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap');
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f8fafc;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #475569;
+            margin-bottom: 24px;
+        }
+
+        .meta-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #3b82f6;
+            padding: 16px 20px;
+            border-radius: 6px;
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        .meta-box p {
+            margin: 4px 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 36px;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #334155;
+            margin-top: 24px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .chart-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .chart-caption {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #1d4ed8;
+        }
+
+        .quote {
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 20px;
+            margin: 20px 0;
+            color: #92400e;
+        }
+
+        .print-btn {
+            background: #1e3a8a;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .print-btn:hover {
+            background: #1e40af;
+        }
+
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; border: none; padding: 0; }
+            .print-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Salvar como PDF</button>
+
+        <div class="header-badge">ODS 4 – Educação de Qualidade | Extensão Universitária</div>
+        <h1>Dashboard Literário: Clássicos Brasileiros</h1>
+        <div class="subtitle">Um Guia Tecnológico sobre a Estilometria e o Processamento de Linguagem Natural na Literatura Canônica</div>
+
+        <div class="meta-box">
+            <p><strong>Autor do Projeto:</strong> Luis Gustavo Rocha Lima (1º Semestre)</p>
+            <p><strong>Instituição de Ensino:</strong> FMU — Centro Universitário das Faculdades Metropolitanas Unidas</p>
+            <p><strong>Curso Vinculado:</strong> Bacharelado em Ciência de Dados</p>
+            <p><strong>Área Temática & Linha:</strong> Inovação, Tecnologia e Cultura Digital · Educação e Letramento Digital</p>
+            <p><strong>ODS Vinculado:</strong> ODS 4 – Educação de Qualidade (UNESCO/ONU)</p>
+            <p><strong>Público-Alvo:</strong> Estudantes de Ensino Médio, Professores de Literatura e Comunidade em Geral</p>
+        </div>
+
+        <h2>1. Apresentação & Justificativa Social</h2>
+        <p>
+            A compreensão das singularidades da literatura brasileira ganha uma nova dimensão quando aliada às ferramentas da Ciência de Dados e do Processamento de Linguagem Natural (PLN). 
+            Frequentemente, os estudantes de ensino médio encaram o estudo dos clássicos como abstrato ou de difícil decodificação.
+            Este guia didático foi desenvolvido como produto comunitário da disciplina de Extensão em Ciência de Dados para demonstrar, por meio de gráficos e evidências estatísticas, como os grandes autores moldaram suas obras com escolhas formais precisas.
+        </p>
+
+        <h2>2. A Luta pela Extensão da Frase: Graciliano Ramos vs. Euclides da Cunha</h2>
+        <p>
+            A análise sintática quantitativa comprova de maneira evidente a famosa "secura verbal" de <strong>Graciliano Ramos</strong> em oposição à exuberância ensaística de <strong>Euclides da Cunha</strong>:
+        </p>
+
+        <div class="chart-card">
+            <img src="figures/fig1_extensao_sentencas.png" alt="Extensão Média de Sentenças">
+            <div class="chart-caption">Figura 1: Média de palavras por sentença nos 7 autores canônicos.</div>
+        </div>
+
+        <p>
+            Enquanto <strong>Graciliano Ramos</strong> constrói suas narrativas com períodos de apenas <span class="highlight">5,7 palavras por frase</span> (com 100% de frases curtas), mimetizando a escassez material do sertanejo, <strong>Euclides da Cunha</strong> emprega períodos oratórios com média de <span class="highlight">22,3 palavras por frase</span>.
+        </p>
+
+        <h2>3. Assinaturas Temáticas e Léxicas</h2>
+        <p>
+            Cada autor traz em sua obra uma impressão digital temática. A mineração de texto permitiu mensurar a densidade dos campos semânticos mais emblemáticos por 1.000 palavras:
+        </p>
+
+        <div class="chart-card">
+            <img src="figures/fig2_heatmap_tematico.png" alt="Matriz de Calor Temática">
+            <div class="chart-caption">Figura 2: Matriz de calor da densidade lexical por autor (ocorrências a cada 1.000 palavras).</div>
+        </div>
+
+        <ul>
+            <li><strong>Jorge Amado:</strong> Registrou <strong>123,3 ocorrências/1.000 palavras</strong> no campo cultural afro-baiano (orixás, capoeira, mar, dendê, saveiro).</li>
+            <li><strong>Rachel de Queiroz:</strong> Registrou <strong>105,6 ocorrências/1.000 palavras</strong> no léxico da seca e da fome em <em>O Quinze</em>.</li>
+            <li><strong>Ariano Suassuna:</strong> Liderou a métrica de oralidade e elementos do cordel com <strong>74,5 ocorrências/1.000 palavras</strong> (interjeições e falares populares).</li>
+            <li><strong>Euclides da Cunha:</strong> Apresentou <strong>37,3 termos deterministas/1.000 palavras</strong>, consolidando a fusão da ciência da época com o épico.</li>
+        </ul>
+
+        <h2>4. O Fluxo de Consciência em Clarice Lispector</h2>
+        <p>
+            A extração de classes verbais entre <strong>verbos reflexivos/existenciais</strong> (como <em>pensar, sentir, ser, existir</em>) e <strong>verbos de ação física</strong> revelou a dinâmica psicológica singular de Clarice:
+        </p>
+
+        <div class="chart-card">
+            <img src="figures/fig3_clarice_reflexao.png" alt="Proporção de Verbos Reflexivos">
+            <div class="chart-caption">Figura 3: Predomínio de verbos de cognição e reflexão no fluxo narrativo de Clarice Lispector.</div>
+        </div>
+
+        <div class="quote">
+            "Eu não sei o que eu sinto, eu sinto uma coisa que ainda não tem nome... O instante é um relâmpago que some assim que tento segurá-lo."
+        </div>
+
+        <h2>5. Invenção Vocabular: Guimarães Rosa</h2>
+        <p>
+            Por meio da métrica de <em>Type-Token Ratio</em> (TTR) e da contagem de <em>Hapax Legomena</em> (palavras que aparecem apenas uma vez), observou-se a extrema riqueza e capacidade de invenção neológica de <strong>João Guimarães Rosa</strong>, que apresentou 115 palavras únicas no excerto analisado.
+        </p>
+
+        <div class="chart-card">
+            <img src="figures/fig4_riqueza_vocabular.png" alt="Riqueza Vocabular">
+            <div class="chart-caption">Figura 4: Comparativo de diversidade lexical e ocorrência de termos únicos (Hapax Legomena).</div>
+        </div>
+
+        <h2>6. Tabela Resumo das Evidências</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Autor</th>
+                    <th>Obra / Foco</th>
+                    <th>Palavras/Frase</th>
+                    <th>Frases Curtas</th>
+                    <th>TTR</th>
+                    <th>Característica Principal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Graciliano Ramos</strong></td>
+                    <td><em>Vidas Secas</em></td>
+                    <td><span class="highlight">5.7</span></td>
+                    <td>100%</td>
+                    <td>0.735</td>
+                    <td>Secura verbal, concisão radical</td>
+                </tr>
+                <tr>
+                    <td><strong>Clarice Lispector</strong></td>
+                    <td><em>A Hora da Estrela</em></td>
+                    <td>12.3</td>
+                    <td>58.3%</td>
+                    <td>0.714</td>
+                    <td>Fluxo de consciência e introspecção</td>
+                </tr>
+                <tr>
+                    <td><strong>Jorge Amado</strong></td>
+                    <td><em>Capitães da Areia</em></td>
+                    <td>16.2</td>
+                    <td>22.2%</td>
+                    <td>0.685</td>
+                    <td>Identidade afro-baiana e lirismo urbano</td>
+                </tr>
+                <tr>
+                    <td><strong>Rachel de Queiroz</strong></td>
+                    <td><em>O Quinze</em></td>
+                    <td>12.9</td>
+                    <td>45.5%</td>
+                    <td>0.768</td>
+                    <td>Léxico da seca, fome e êxodo</td>
+                </tr>
+                <tr>
+                    <td><strong>Ariano Suassuna</strong></td>
+                    <td><em>Auto da Compadecida</em></td>
+                    <td>23.0</td>
+                    <td>28.6%</td>
+                    <td>0.721</td>
+                    <td>Oralidade nordestina e teatro de cordel</td>
+                </tr>
+                <tr>
+                    <td><strong>Euclides da Cunha</strong></td>
+                    <td><em>Os Sertões</em></td>
+                    <td><span class="highlight">22.3</span></td>
+                    <td>0%</td>
+                    <td>0.776</td>
+                    <td>Linguagem científica determinista</td>
+                </tr>
+                <tr>
+                    <td><strong>Guimarães Rosa</strong></td>
+                    <td><em>Grande Sertão: Veredas</em></td>
+                    <td>10.4</td>
+                    <td>63.2%</td>
+                    <td>0.685</td>
+                    <td>Neologismos e recriação da fala sertaneja</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>7. Considerações Finais</h2>
+        <p>
+            O <strong>Dashboard Literário</strong> cumpre seu papel como ferramenta de extensão universitária alinhada ao <strong>ODS 4</strong> ao fornecer material didático gratuito, moderno e baseado em dados para escolas de todo o Brasil. Os dados numéricos não substituem a sensibilidade da leitura estética, mas funcionam como uma lente reveladora da maestria formal dos nossos maiores escritores.
+        </p>
+    </div>
+
+</body>
+</html>

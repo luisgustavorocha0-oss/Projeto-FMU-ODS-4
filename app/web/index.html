@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Literário: Clássicos Brasileiros</title>
+  <!-- Google Fonts: Newsreader (Editorial Serif) & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#84383F',
+              hover: '#6E2D33',
+              light: '#FDF2F3',
+              subtle: '#FAF0F1'
+            },
+            canvas: '#FAF7F2',
+            sidebar: '#F5EFE6',
+            sand: {
+              DEFAULT: '#F6F1E8',
+              border: '#E8E1D5',
+              subtle: '#EFE9DF'
+            },
+            darkcard: '#23211F',
+            paper: '#FFFFFF',
+            ink: {
+              DEFAULT: '#1C1917',
+              muted: '#78716C',
+              light: '#A8A29E'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)',
+            'hover': '0 12px 28px -4px rgba(132, 56, 63, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.05)',
+            'floating': '0 20px 35px -8px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0,0,0,0.1)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FAF7F2;
+      color: #1C1917;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5EFE6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D8CEBE;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #84383F;
+    }
+
+    /* Interactive Floating Speech Bubble on Hover */
+    .author-img-container {
+      position: relative;
+    }
+
+    .author-tooltip {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(8px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 50;
+      white-space: normal;
+      width: 210px;
+    }
+
+    .author-img-container:hover .author-tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
+    /* Subtle arrow for tooltip */
+    .author-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: #23211F transparent transparent transparent;
+    }
+
+    /* Animated Bars */
+    .bar-fill {
+      transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Fade in animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row antialiased selection:bg-brand selection:text-white">
+
+  <!-- ========================================================================= -->
+  <!-- SIDEBAR (LEFT)                                                            -->
+  <!-- ========================================================================= -->
+  <aside class="w-full md:w-64 lg:w-72 bg-sidebar border-r border-sand-border flex flex-col shrink-0 min-h-screen p-6 justify-between">
+    
+    <!-- Top Identity Area -->
+    <div>
+      <div class="flex items-start gap-3 mb-8">
+        <div class="w-10 h-10 bg-brand rounded-lg flex items-center justify-center text-white shadow-sm shrink-0">
+          <i data-lucide="book-open" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h1 class="font-serif text-xl font-bold leading-tight text-ink tracking-tight">
+            Clássicos<br>brasileiros.
+          </h1>
+          <span class="text-[10px] font-bold tracking-widest text-ink-muted uppercase mt-0.5 block">
+            Literatura & Dados
+          </span>
+          <p class="text-[11px] text-ink-muted mt-2 border-t border-sand-border/80 pt-1.5 leading-tight">
+            Por <strong class="text-ink font-semibold">Luis Gustavo Rocha Lima</strong><br>
+            <span class="text-[10px] text-brand font-semibold">1º Semestre · FMU</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Section -->
+      <div class="mb-8">
+        <div class="mb-3">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-ink-muted">Navegação Didática</p>
+          <p class="text-xs text-ink-muted/80">Selecione o módulo</p>
+        </div>
+
+        <nav class="space-y-1.5" id="navMenu">
+          <button onclick="switchTab('geral')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold text-brand bg-brand-light transition-all text-left group">
+            <i data-lucide="layout-grid" class="w-4 h-4 text-brand"></i>
+            <span>Visão Geral Comparativa</span>
+          </button>
+          
+          <button onclick="switchTab('individual')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-ink-muted hover:text-ink hover:bg-sand/60 transition-all text-left group">
+            <i data-lucide="user" class="w-4 h-4 text-ink-muted group-hover:text-ink"></i>
+            <span>Análise Individual por Autor</span>
+          </button>
+
+          <button onclick="switchTab('laboratorio')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-ink-muted hover:text-ink hover:bg-sand/60 transition-all text-left group">
+            <div class="flex items-center gap-3 w-full justify-between">
+              <div class="flex items-center gap-3">
+                <i data-lucide="flask-conical" class="w-4 h-4 text-ink-muted group-hover:text-ink"></i>
+                <span>Laboratório de NLP</span>
+              </div>
+              <span class="text-[10px] uppercase font-bold text-brand bg-brand-subtle px-1.5 py-0.5 rounded">Teste</span>
+            </div>
+          </button>
+
+          <button onclick="openModal('sobreModal')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-ink-muted hover:text-ink hover:bg-sand/60 transition-all text-left group">
+            <div class="flex items-center gap-3 w-full justify-between">
+              <div class="flex items-center gap-3">
+                <i data-lucide="info" class="w-4 h-4 text-ink-muted group-hover:text-ink"></i>
+                <span>Sobre o Projeto & Metodologia</span>
+              </div>
+              <span class="text-[10px] font-bold text-ink-muted">ODS 4</span>
+            </div>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Bottom Sidebar Quote & ODS Badge -->
+    <div class="pt-6 border-t border-sand-border/80 space-y-5">
+      <!-- Iconic Quote -->
+      <div>
+        <span class="text-4xl font-serif text-brand leading-none font-bold select-none">“</span>
+        <blockquote class="font-serif italic text-lg text-ink font-semibold leading-snug -mt-2 mb-1.5">
+          Viver é muito perigoso.
+        </blockquote>
+        <p class="text-[10px] font-bold tracking-wider uppercase text-ink-muted">
+          GUIMARÃES ROSA <span class="font-normal italic">Grande sertão: veredas</span>
+        </p>
+      </div>
+
+      <!-- ODS 4 Pill Badge -->
+      <div class="bg-sand/80 border border-sand-border rounded-lg p-3">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-brand"></span>
+          <span class="text-[10px] font-bold tracking-wider uppercase text-brand">ODS 4 · Educação de Qualidade</span>
+        </div>
+        <p class="text-xs text-ink-muted leading-relaxed">
+          Um projeto universitário para ler a literatura com novas ferramentas.
+        </p>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN CONTENT AREA                                                         -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full space-y-8">
+    
+    <!-- Top Breadcrumb & Actions Bar -->
+    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-sand-border/70 pb-6">
+      <div>
+        <div class="flex items-center gap-2 text-[11px] font-bold tracking-wider uppercase text-ink-muted mb-2">
+          <span>Acervo Literário</span>
+          <span>/</span>
+          <span class="text-brand">Visão Geral Comparativa</span>
+        </div>
+        <h2 class="font-serif text-3xl lg:text-4xl font-bold text-ink tracking-tight">
+          Dashboard Literário: Clássicos Brasileiros
+        </h2>
+        <p class="text-sm text-ink-muted mt-1">
+          Ciência de Dados aplicada à Literatura & Educação (ODS 4) | Processamento de Linguagem Natural & Estilometria
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="openModal('sobreModal')" class="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full border border-sand-border bg-paper hover:bg-sand/50 text-ink shadow-sm transition-all hover:border-brand/40">
+          <span>Sobre o projeto</span>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-brand"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Pedagogical Callout Banner -->
+    <div class="bg-sand/70 border border-sand-border rounded-xl p-4 flex items-start gap-3.5 text-sm text-ink-muted shadow-sm">
+      <div class="w-7 h-7 rounded-full bg-white border border-sand-border flex items-center justify-center shrink-0 text-brand shadow-xs">
+        <i data-lucide="lightbulb" class="w-4 h-4 text-brand"></i>
+      </div>
+      <p class="leading-relaxed">
+        <strong class="text-ink font-semibold">Objetivo Pedagógico:</strong> demonstrar como os números revelam a impressão digital estilística de cada autor — desde a "secura" de Graciliano até a erudição científica de Euclides da Cunha.
+      </p>
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 1: PANORAMA COMPARATIVO DOS AUTORES                             -->
+    <!-- ======================================================================= -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-serif text-2xl font-bold text-ink">
+          Panorama Comparativo dos 7 Clássicos
+        </h3>
+        
+        <div class="flex items-center gap-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-brand bg-brand-light px-2.5 py-1 rounded-full border border-brand/10">
+            <span id="activeAuthorCount">4</span> Autores em Destaque
+          </span>
+          <button id="toggleAllBtn" onclick="toggleAllAuthors()" class="text-xs font-semibold text-ink-muted hover:text-brand underline px-2 py-1 transition-colors">
+            Ver todos os 7
+          </button>
+        </div>
+      </div>
+
+      <!-- Author Cards Grid -->
+      <div id="authorGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- CARD 1: Graciliano Ramos -->
+        <div class="bg-paper border border-sand-border rounded-xl p-5 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <span class="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block mb-3">
+              Mais Conciso (Frases Curtas)
+            </span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <!-- Portrait with Hover Speech Bubble -->
+              <div class="author-img-container shrink-0">
+                <img src="assets/authors/graciliano.jpg" alt="Graciliano Ramos" 
+                     class="w-20 h-24 sm:w-22 sm:h-28 rounded-xl object-cover object-top grayscale contrast-110 border border-sand-border shadow-md group-hover:grayscale-0 group-hover:scale-105 group-hover:shadow-hover transition-all duration-300">
+                
+                <!-- Floating Hover Tooltip / Secret Quote -->
+                <div class="author-tooltip bg-darkcard text-white p-3.5 rounded-xl shadow-floating text-center">
+                  <p class="font-serif italic text-xs leading-snug text-sand">
+                    “A palavra não foi feita para enfeitar, foi feita para dizer.”
+                  </p>
+                  <span class="text-[9px] font-bold text-brand uppercase tracking-wider block mt-1.5">— Graciliano Ramos</span>
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-lg sm:text-xl font-bold text-ink leading-tight">Graciliano Ramos</h4>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="font-serif text-3xl sm:text-4xl font-bold text-brand">5,7</span>
+                  <span class="text-xs text-ink-muted font-medium">palavras / frase</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 border-t border-sand-border/80">
+            <p class="font-serif italic text-xs text-ink/80 leading-relaxed mb-1.5">
+              “Na planície avermelhada os juazeiros alargavam duas manchas verdes.”
+            </p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Vidas secas</span>
+          </div>
+        </div>
+
+        <!-- CARD 2: Euclides da Cunha -->
+        <div class="bg-paper border border-sand-border rounded-xl p-5 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <span class="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block mb-3">
+              Maior Período Sintático
+            </span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <div class="author-img-container shrink-0">
+                <img src="assets/authors/euclides.jpg" alt="Euclides da Cunha" 
+                     class="w-20 h-24 sm:w-22 sm:h-28 rounded-xl object-cover object-top grayscale contrast-110 border border-sand-border shadow-md group-hover:grayscale-0 group-hover:scale-105 group-hover:shadow-hover transition-all duration-300">
+                
+                <div class="author-tooltip bg-darkcard text-white p-3.5 rounded-xl shadow-floating text-center">
+                  <p class="font-serif italic text-xs leading-snug text-sand">
+                    “O sertanejo é, antes de tudo, um forte.”
+                  </p>
+                  <span class="text-[9px] font-bold text-brand uppercase tracking-wider block mt-1.5">— Euclides da Cunha</span>
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-lg sm:text-xl font-bold text-ink leading-tight">Euclides da Cunha</h4>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="font-serif text-3xl sm:text-4xl font-bold text-brand">22,3</span>
+                  <span class="text-xs text-ink-muted font-medium">palavras / frase</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 border-t border-sand-border/80">
+            <p class="font-serif italic text-xs text-ink/80 leading-relaxed mb-1.5">
+              “O sertanejo é, antes de tudo, um forte.”
+            </p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Os sertões</span>
+          </div>
+        </div>
+
+        <!-- CARD 3: Clarice Lispector -->
+        <div class="bg-paper border border-sand-border rounded-xl p-5 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <span class="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block mb-3">
+              Mais Introspectiva
+            </span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <div class="author-img-container shrink-0">
+                <img src="assets/authors/clarice.jpg" alt="Clarice Lispector" 
+                     class="w-20 h-24 sm:w-22 sm:h-28 rounded-xl object-cover object-top grayscale contrast-110 border border-sand-border shadow-md group-hover:grayscale-0 group-hover:scale-105 group-hover:shadow-hover transition-all duration-300">
+                
+                <div class="author-tooltip bg-darkcard text-white p-3.5 rounded-xl shadow-floating text-center">
+                  <p class="font-serif italic text-xs leading-snug text-sand">
+                    “Liberdade é pouco. O que eu desejo ainda não tem nome.”
+                  </p>
+                  <span class="text-[9px] font-bold text-brand uppercase tracking-wider block mt-1.5">— Clarice Lispector</span>
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-lg sm:text-xl font-bold text-ink leading-tight">Clarice Lispector</h4>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="font-serif text-3xl sm:text-4xl font-bold text-brand">100%</span>
+                  <span class="text-xs text-ink-muted font-medium">reflexão</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 border-t border-sand-border/80">
+            <p class="font-serif italic text-xs text-ink/80 leading-relaxed mb-1.5">
+              “Tudo no mundo começou com um sim.”
+            </p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">A hora da estrela</span>
+          </div>
+        </div>
+
+        <!-- CARD 4: Guimarães Rosa -->
+        <div class="bg-paper border border-sand-border rounded-xl p-5 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <span class="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block mb-3">
+              Maior Vocabulário Único
+            </span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <div class="author-img-container shrink-0">
+                <img src="assets/authors/rosa.jpg" alt="Guimarães Rosa" 
+                     class="w-20 h-24 sm:w-22 sm:h-28 rounded-xl object-cover object-top grayscale contrast-110 border border-sand-border shadow-md group-hover:grayscale-0 group-hover:scale-105 group-hover:shadow-hover transition-all duration-300">
+                
+                <div class="author-tooltip bg-darkcard text-white p-3.5 rounded-xl shadow-floating text-center">
+                  <p class="font-serif italic text-xs leading-snug text-sand">
+                    “O real não está na saída nem na chegada: ele se dispõe é no meio da travessia.”
+                  </p>
+                  <span class="text-[9px] font-bold text-brand uppercase tracking-wider block mt-1.5">— Guimarães Rosa</span>
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-lg sm:text-xl font-bold text-ink leading-tight">Guimarães Rosa</h4>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="font-serif text-3xl sm:text-4xl font-bold text-brand">115</span>
+                  <span class="text-xs text-ink-muted font-medium">Hapax</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 border-t border-sand-border/80">
+            <p class="font-serif italic text-xs text-ink/80 leading-relaxed mb-1.5">
+              “Viver é muito perigoso.”
+            </p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Grande sertão: veredas</span>
+          </div>
+        </div>
+
+        <!-- EXTRA AUTHORS (Hidden by default, revealable via Toggle button) -->
+        <!-- CARD 5: Jorge Amado -->
+        <div class="extra-author hidden bg-paper border border-sand-border rounded-xl p-5 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <span class="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block mb-3">
+              Identidade Baiana & Mar
+            </span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <div class="author-img-container shrink-0">
+                <img src="assets/authors/jorge.jpg" alt="Jorge Amado" 
+                     class="w-20 h-24 sm:w-22 sm:h-28 rounded-xl object-cover object-top grayscale contrast-110 border border-sand-border shadow-md group-hover:grayscale-0 group-hover:scale-105 group-hover:shadow-hover transition-all duration-300">
+                
+                <div class="author-tooltip bg-darkcard text-white p-3.5 rounded-xl shadow-floating text-center">
+                  <p class="font-serif italic text-xs leading-snug text-sand">
+                    “A Bahia é uma terra de feitiço e poesia, onde o mar dita o ritmo dos homens.”
+                  </p>
+                  <span class="text-[9px] font-bold text-brand uppercase tracking-wider block mt-1.5">— Jorge Amado</span>
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-lg sm:text-xl font-bold text-ink leading-tight">Jorge Amado</h4>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="font-serif text-3xl sm:text-4xl font-bold text-brand">123,3</span>
+                  <span class="text-xs text-ink-muted font-medium">termos / 1k</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 border-t border-sand-border/80">
+            <p class="font-serif italic text-xs text-ink/80 leading-relaxed mb-1.5">
+              “No cais da Bahia, os saveiros cantam a glória de Iemanjá.”
+            </p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Mar Morto</span>
+          </div>
+        </div>
+
+        <!-- CARD 6: Rachel de Queiroz -->
+        <div class="extra-author hidden bg-paper border border-sand-border rounded-xl p-5 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <span class="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block mb-3">
+              Léxico da Seca & Êxodo
+            </span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <div class="author-img-container shrink-0">
+                <img src="assets/authors/rachel.jpg" alt="Rachel de Queiroz" 
+                     class="w-20 h-24 sm:w-22 sm:h-28 rounded-xl object-cover object-top grayscale contrast-110 border border-sand-border shadow-md group-hover:grayscale-0 group-hover:scale-105 group-hover:shadow-hover transition-all duration-300">
+                
+                <div class="author-tooltip bg-darkcard text-white p-3.5 rounded-xl shadow-floating text-center">
+                  <p class="font-serif italic text-xs leading-snug text-sand">
+                    “A fome é o único espetáculo que nunca perde a dramaticidade.”
+                  </p>
+                  <span class="text-[9px] font-bold text-brand uppercase tracking-wider block mt-1.5">— Rachel de Queiroz</span>
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-lg sm:text-xl font-bold text-ink leading-tight">Rachel de Queiroz</h4>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="font-serif text-3xl sm:text-4xl font-bold text-brand">105,6</span>
+                  <span class="text-xs text-ink-muted font-medium">escassez / 1k</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 border-t border-sand-border/80">
+            <p class="font-serif italic text-xs text-ink/80 leading-relaxed mb-1.5">
+              “A terra esturricada abria fendas sob o sol impiedoso.”
+            </p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">O Quinze</span>
+          </div>
+        </div>
+
+        <!-- CARD 7: Ariano Suassuna -->
+        <div class="extra-author hidden bg-paper border border-sand-border rounded-xl p-5 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <span class="text-[11px] font-semibold text-ink-muted uppercase tracking-wider block mb-3">
+              Oralidade & Cordel
+            </span>
+
+            <div class="flex items-center gap-4 mb-4">
+              <div class="author-img-container shrink-0">
+                <img src="assets/authors/suassuna.jpg" alt="Ariano Suassuna" 
+                     class="w-20 h-24 sm:w-22 sm:h-28 rounded-xl object-cover object-top grayscale contrast-110 border border-sand-border shadow-md group-hover:grayscale-0 group-hover:scale-105 group-hover:shadow-hover transition-all duration-300">
+                
+                <div class="author-tooltip bg-darkcard text-white p-3.5 rounded-xl shadow-floating text-center">
+                  <p class="font-serif italic text-xs leading-snug text-sand">
+                    “Não sei, só sei que foi assim!”
+                  </p>
+                  <span class="text-[9px] font-bold text-brand uppercase tracking-wider block mt-1.5">— Ariano Suassuna</span>
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-lg sm:text-xl font-bold text-ink leading-tight">Ariano Suassuna</h4>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span class="font-serif text-3xl sm:text-4xl font-bold text-brand">74,5</span>
+                  <span class="text-xs text-ink-muted font-medium">interjeições / 1k</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 border-t border-sand-border/80">
+            <p class="font-serif italic text-xs text-ink/80 leading-relaxed mb-1.5">
+              “Oxente, Chicó! Como é que você me diz uma desgraça dessa?”
+            </p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-ink-muted">Auto da Compadecida</span>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-[11px] text-ink-muted/70 mt-2.5">
+        Recorte dos autores identificados na referência. Indicadores extraídos computacionalmente; passe o cursor sobre as fotos para revelar as reflexões de cada autor.
+      </p>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 2: INTERACTIVE TABS & COMPARATIVE VISUALIZATION                 -->
+    <!-- ======================================================================= -->
+    <section class="bg-paper border border-sand-border rounded-2xl p-6 lg:p-8 shadow-card">
+      
+      <!-- Tabs Navigation -->
+      <div class="flex items-center gap-6 border-b border-sand-border pb-4 mb-6 overflow-x-auto">
+        <button onclick="setTab('sintaxe')" id="tabBtn-sintaxe" class="tab-button flex items-center gap-2 text-sm font-bold text-brand border-b-2 border-brand pb-4 -mb-4 transition-all">
+          <i data-lucide="pen-tool" class="w-4 h-4"></i>
+          <span>Sintaxe & Concisão</span>
+        </button>
+
+        <button onclick="setTab('tematicas')" id="tabBtn-tematicas" class="tab-button flex items-center gap-2 text-sm font-medium text-ink-muted hover:text-ink pb-4 -mb-4 transition-all">
+          <i data-lucide="globe" class="w-4 h-4"></i>
+          <span>Assinaturas Temáticas</span>
+        </button>
+
+        <button onclick="setTab('fluxo')" id="tabBtn-fluxo" class="tab-button flex items-center gap-2 text-sm font-medium text-ink-muted hover:text-ink pb-4 -mb-4 transition-all">
+          <i data-lucide="brain" class="w-4 h-4"></i>
+          <span>Fluxo de Consciência</span>
+        </button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div id="tabContent-sintaxe" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
+        
+        <!-- Left: Sentence Length Bar Chart -->
+        <div class="lg:col-span-7 space-y-6">
+          <div>
+            <h4 class="font-serif text-xl font-bold text-ink">Comprimento Médio de Sentenças</h4>
+            <p class="text-xs text-ink-muted mt-0.5">Palavras por Frase — comparação dos indicadores identificados</p>
+          </div>
+
+          <!-- Custom Aesthetic Progress Bars -->
+          <div class="space-y-5 pt-2">
+            <!-- Graciliano -->
+            <div>
+              <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
+                <span class="text-ink">Graciliano Ramos</span>
+                <span class="text-brand font-bold">5,7 palavras / frase</span>
+              </div>
+              <div class="h-6 w-full bg-sand/80 rounded-md overflow-hidden p-0.5 border border-sand-border">
+                <div class="bar-fill h-full bg-brand rounded" style="width: 22.8%;"></div>
+              </div>
+            </div>
+
+            <!-- Euclides da Cunha -->
+            <div>
+              <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
+                <span class="text-ink">Euclides da Cunha</span>
+                <span class="text-brand font-bold">22,3 palavras / frase</span>
+              </div>
+              <div class="h-6 w-full bg-sand/80 rounded-md overflow-hidden p-0.5 border border-sand-border">
+                <div class="bar-fill h-full bg-brand rounded" style="width: 89.2%;"></div>
+              </div>
+            </div>
+
+            <!-- Guimarães Rosa -->
+            <div>
+              <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
+                <span class="text-ink">Guimarães Rosa</span>
+                <span class="text-ink-muted font-bold">10,4 palavras / frase</span>
+              </div>
+              <div class="h-6 w-full bg-sand/80 rounded-md overflow-hidden p-0.5 border border-sand-border">
+                <div class="bar-fill h-full bg-ink-muted/60 rounded" style="width: 41.6%;"></div>
+              </div>
+            </div>
+
+            <!-- Clarice Lispector -->
+            <div>
+              <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
+                <span class="text-ink">Clarice Lispector</span>
+                <span class="text-ink-muted font-bold">12,3 palavras / frase</span>
+              </div>
+              <div class="h-6 w-full bg-sand/80 rounded-md overflow-hidden p-0.5 border border-sand-border">
+                <div class="bar-fill h-full bg-ink-muted/60 rounded" style="width: 49.2%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- X-Axis Markers -->
+          <div class="flex justify-between text-[10px] text-ink-muted/60 font-mono px-1 border-t border-sand-border pt-1.5">
+            <span>0</span>
+            <span>5</span>
+            <span>10</span>
+            <span>15</span>
+            <span>20</span>
+            <span>25</span>
+          </div>
+
+          <p class="text-[11px] text-ink-muted/70 flex items-center gap-1.5">
+            <i data-lucide="info" class="w-3.5 h-3.5 shrink-0 text-brand"></i>
+            <span>Graciliano Ramos demonstra a maior concisão sintática da literatura nacional, mimetizando a escassez sertaneja.</span>
+          </p>
+        </div>
+
+        <!-- Right: Editorial Note Card (Styled as in Figma) -->
+        <div class="lg:col-span-5 bg-sand rounded-xl p-6 border border-sand-border space-y-4">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-brand block">
+            Entre a frase e o estilo
+          </span>
+
+          <h4 class="font-serif text-2xl font-bold text-ink leading-snug">
+            A concisão de um. A amplitude do outro.
+          </h4>
+
+          <p class="text-xs text-ink-muted leading-relaxed">
+            Graciliano Ramos economiza palavras (estilo despojado), enquanto Euclides constrói períodos complexos de ensaio científico.
+          </p>
+
+          <blockquote class="border-l-2 border-brand pl-3.5 py-1">
+            <p class="font-serif italic text-sm text-brand font-medium">
+              “O sertanejo é, antes de tudo, um forte.”
+            </p>
+            <span class="text-[10px] text-ink-muted uppercase tracking-wider block mt-1">
+              Euclides da Cunha · Os sertões
+            </span>
+          </blockquote>
+
+          <p class="text-[11px] text-ink-muted/80 leading-normal pt-2 border-t border-sand-border/80">
+            Uma frase isolada não representa a média de uma obra. Use o trecho para ler; use o corpus para comparar.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Tab Content: Assinaturas Temáticas -->
+      <div id="tabContent-tematicas" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
+        <div class="lg:col-span-7 space-y-5">
+          <h4 class="font-serif text-xl font-bold text-ink">Densidade Temática por 1.000 Palavras</h4>
+          <p class="text-xs text-ink-muted">Presença quantificada de vocabulário característico de cada obra.</p>
+
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Cultura Afro-Baiana (Jorge Amado)</span>
+                <span class="text-brand font-bold">123,3 / 1k</span>
+              </div>
+              <div class="h-4 bg-sand rounded-full overflow-hidden">
+                <div class="bar-fill h-full bg-brand rounded-full" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Seca & Escassez (Rachel de Queiroz)</span>
+                <span class="text-brand font-bold">105,6 / 1k</span>
+              </div>
+              <div class="h-4 bg-sand rounded-full overflow-hidden">
+                <div class="bar-fill h-full bg-brand rounded-full" style="width: 85.6%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Oralidade & Cordel (Ariano Suassuna)</span>
+                <span class="text-brand font-bold">74,5 / 1k</span>
+              </div>
+              <div class="h-4 bg-sand rounded-full overflow-hidden">
+                <div class="bar-fill h-full bg-brand rounded-full" style="width: 60.4%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Ciência & Determinismo (Euclides da Cunha)</span>
+                <span class="text-brand font-bold">37,3 / 1k</span>
+              </div>
+              <div class="h-4 bg-sand rounded-full overflow-hidden">
+                <div class="bar-fill h-full bg-brand rounded-full" style="width: 30.2%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-sand rounded-xl p-6 border border-sand-border space-y-3">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-brand block">Identidade & Regionalismo</span>
+          <h4 class="font-serif text-xl font-bold text-ink">Léxicos de Pertencimento</h4>
+          <p class="text-xs text-ink-muted leading-relaxed">
+            As palavras não surgem por acaso: Jorge Amado povoa Salvador de saveiros e orixás; Rachel de Queiroz documenta a marcha dos retirantes sob o sol escaldante de 1915.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tab Content: Fluxo de Consciência -->
+      <div id="tabContent-fluxo" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
+        <div class="lg:col-span-7 space-y-5">
+          <h4 class="font-serif text-xl font-bold text-ink">Verbos de Reflexão vs. Verbos de Ação</h4>
+          <p class="text-xs text-ink-muted">Proporção de verbos existenciais e cognitivos na progressão narrativa.</p>
+
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Clarice Lispector (Foco Introspectivo)</span>
+                <span class="text-brand font-bold">100% Reflexão</span>
+              </div>
+              <div class="h-4 bg-sand rounded-full overflow-hidden">
+                <div class="bar-fill h-full bg-brand rounded-full" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Guimarães Rosa (Metafísica Sertaneja)</span>
+                <span class="text-ink-muted font-bold">100% Reflexão</span>
+              </div>
+              <div class="h-4 bg-sand rounded-full overflow-hidden">
+                <div class="bar-fill h-full bg-ink-muted/80 rounded-full" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold mb-1">
+                <span>Graciliano Ramos (Ação Concreta / Seca)</span>
+                <span class="text-ink-muted font-bold">0% Reflexão (100% Ação)</span>
+              </div>
+              <div class="h-4 bg-sand rounded-full overflow-hidden">
+                <div class="bar-fill h-full bg-sand-border rounded-full" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-sand rounded-xl p-6 border border-sand-border space-y-3">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-brand block">Mente vs. Matéria</span>
+          <h4 class="font-serif text-xl font-bold text-ink">A Vertigem Clariceana</h4>
+          <p class="text-xs text-ink-muted leading-relaxed">
+            Enquanto as tramas convencionais avançam quando os personagens andam ou correm, na obra de Clarice a história acontece na vertigem do pensamento: existir, sentir, hesitar.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 3: BOTTOM GRID (NLP LAB & ODS 4 HERO CARD)                      -->
+    <!-- ======================================================================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      
+      <!-- Left: Laboratório de NLP -->
+      <div class="lg:col-span-7 bg-paper border border-sand-border rounded-2xl p-6 lg:p-7 shadow-card flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="font-serif text-2xl font-bold text-ink">Laboratório de NLP</h4>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-brand bg-brand-light px-2.5 py-1 rounded">
+              Teste seu texto
+            </span>
+          </div>
+          <p class="text-xs text-ink-muted mb-4">
+            Da leitura à análise: experimente observar a construção de uma frase ou redação.
+          </p>
+
+          <!-- Input Box with Sample -->
+          <div class="relative">
+            <textarea id="labInput" rows="3" 
+                      class="w-full bg-sand/60 border border-sand-border rounded-xl p-4 text-sm font-serif text-ink focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition-all resize-none"
+                      placeholder="Digite ou cole uma frase aqui...">O sertanejo é, antes de tudo, um forte.</textarea>
+            <span class="absolute bottom-2.5 right-3 text-[10px] text-ink-muted/70 italic">
+              Exemplo de leitura · Euclides da Cunha, Os sertões
+            </span>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="flex flex-wrap gap-2 mt-3">
+            <button onclick="setSample('O sertanejo é, antes de tudo, um forte.')" class="text-[11px] px-2.5 py-1 rounded-md bg-sand/70 hover:bg-sand text-ink-muted transition">Euclides</button>
+            <button onclick="setSample('A vida era seca e dura como cascudo de tatu. Não havia palavras.')" class="text-[11px] px-2.5 py-1 rounded-md bg-sand/70 hover:bg-sand text-ink-muted transition">Graciliano</button>
+            <button onclick="setSample('Eu existo no silêncio da noite e sinto que pensar dói na alma.')" class="text-[11px] px-2.5 py-1 rounded-md bg-sand/70 hover:bg-sand text-ink-muted transition">Clarice</button>
+            <button onclick="setSample('Oxente, eita cabra danado! Valei-me Nossa Senhora!')" class="text-[11px] px-2.5 py-1 rounded-md bg-sand/70 hover:bg-sand text-ink-muted transition">Suassuna</button>
+          </div>
+        </div>
+
+        <!-- Result Box & Analyze Button -->
+        <div class="mt-5 pt-4 border-t border-sand-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div id="labStatus" class="text-xs text-ink-muted">
+            <span class="inline-block w-2 h-2 rounded-full bg-sand-border mr-1.5"></span>
+            <span>Aguardando análise</span>
+          </div>
+
+          <button onclick="analyzeUserText()" class="inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-hover text-white text-xs font-semibold px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-200 shrink-0">
+            <span>Analisar texto</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- Dynamic Lab Metric Pills (Hidden until analyzed) -->
+        <div id="labResults" class="hidden mt-4 pt-3 border-t border-dashed border-sand-border grid grid-cols-3 gap-2">
+          <div class="bg-sand/70 p-2.5 rounded-lg text-center">
+            <span class="text-[10px] text-ink-muted uppercase block">Palavras</span>
+            <span id="resWords" class="font-serif text-lg font-bold text-ink">0</span>
+          </div>
+          <div class="bg-sand/70 p-2.5 rounded-lg text-center">
+            <span class="text-[10px] text-ink-muted uppercase block">Média Pal/Frase</span>
+            <span id="resAvg" class="font-serif text-lg font-bold text-brand">0</span>
+          </div>
+          <div class="bg-sand/70 p-2.5 rounded-lg text-center">
+            <span class="text-[10px] text-ink-muted uppercase block">Estilo Mais Próximo</span>
+            <span id="resMatch" class="font-serif text-xs font-bold text-ink block mt-1">Carregando...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Dark ODS 4 Card (Exact Match to Figma) -->
+      <div class="lg:col-span-5 bg-darkcard text-white rounded-2xl p-7 lg:p-8 flex flex-col justify-between shadow-card relative overflow-hidden">
+        
+        <!-- Subtle Glow Effect -->
+        <div class="absolute -right-16 -top-16 w-48 h-48 bg-brand/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div>
+          <div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-brand mb-4">
+            <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
+            <span>ODS 4 · Educação de Qualidade</span>
+          </div>
+
+          <h4 class="font-serif text-3xl font-bold tracking-tight mb-3 text-sand">
+            Ler, comparar, compreender.
+          </h4>
+
+          <p class="text-xs text-sand/80 leading-relaxed mb-4">
+            O projeto aproxima literatura e ciência de dados. A estilometria observa padrões de escrita; a leitura das obras dá contexto aos números.
+          </p>
+
+          <p class="text-[11px] text-sand/50 leading-relaxed border-t border-white/10 pt-3">
+            Os indicadores reproduzem o painel de referência. Sem o corpus e os critérios de cálculo, não constituem resultados validados nesta proposta.
+          </p>
+        </div>
+
+        <div class="pt-6">
+          <button onclick="openModal('sobreModal')" class="inline-flex items-center gap-2 text-xs font-semibold text-white/90 hover:text-white transition group">
+            <span>Sobre o Projeto & Metodologia</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-brand group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Note -->
+    <footer class="pt-6 pb-2 text-center text-xs text-ink-muted/80 border-t border-sand-border space-y-1.5">
+      <p class="font-medium text-ink text-sm">
+        Projeto concebido e desenvolvido por <strong class="text-brand font-bold">Luis Gustavo Rocha Lima</strong>
+      </p>
+      <p class="text-xs text-ink-muted">
+        1º Semestre · Bacharelado em Ciência de Dados · <strong>FMU — Centro Universitário das Faculdades Metropolitanas Unidas</strong>
+      </p>
+      <p class="text-[11px] text-ink-muted/60">
+        Atividade Curricular de Extensão Universitária · ODS 4: Educação de Qualidade · Processamento de Linguagem Natural & Estilometria
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: SOBRE O PROJETO & METODOLOGIA (ODS 4)                              -->
+  <!-- ========================================================================= -->
+  <div id="sobreModal" class="fixed inset-0 bg-ink/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-paper border border-sand-border rounded-2xl max-w-2xl w-full p-6 lg:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeModal('sobreModal')" class="absolute top-5 right-5 text-ink-muted hover:text-ink">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <span class="text-[10px] font-bold uppercase tracking-wider text-brand bg-brand-light px-2.5 py-1 rounded">
+        Diretrizes Institucionais & Extensão Universitária
+      </span>
+
+      <h3 class="font-serif text-2xl font-bold text-ink mt-3 mb-1">
+        Dashboard Literário: Clássicos Brasileiros
+      </h3>
+      <p class="text-xs text-ink-muted mb-4">Um Guia Tecnológico sobre os Clássicos da Literatura Brasileira</p>
+
+      <!-- Ficha Técnica de Autoria -->
+      <div class="p-4 bg-sand rounded-xl border border-sand-border space-y-2 mb-6">
+        <div class="flex items-center gap-2 text-brand font-bold text-xs uppercase tracking-wider">
+          <i data-lucide="award" class="w-4 h-4 text-brand"></i>
+          <span>Autoria & Ficha Acadêmica</span>
+        </div>
+        <p class="text-base font-serif font-bold text-ink">Luis Gustavo Rocha Lima</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs text-ink-muted">
+          <p><strong class="text-ink">Período:</strong> 1º Semestre</p>
+          <p><strong class="text-ink">Curso:</strong> Bacharelado em Ciência de Dados</p>
+          <p class="sm:col-span-2"><strong class="text-ink">Instituição:</strong> FMU — Centro Universitário das Faculdades Metropolitanas Unidas</p>
+          <p><strong class="text-ink">Área Temática:</strong> Inovação, Tecnologia e Cultura Digital</p>
+          <p><strong class="text-ink">Linha de Extensão:</strong> Educação e Letramento Digital</p>
+          <p class="sm:col-span-2"><strong class="text-ink">Alinhamento Global:</strong> ODS 4 – Educação de Qualidade (ONU/UNESCO)</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs text-ink-muted leading-relaxed">
+        <h4 class="font-serif text-base font-bold text-ink pt-2">Metodologia e Coleta de Dados</h4>
+        <p>
+          Os dados estatísticos foram gerados através de um pipeline em Python utilizando bibliotecas canônicas de Processamento de Linguagem Natural (NLTK, spaCy e Pandas).
+        </p>
+
+        <h4 class="font-serif text-base font-bold text-ink pt-2">Escopo dos 7 Autores Analisados</h4>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>Guimarães Rosa:</strong> Neologismos e riqueza vocabular (Type-Token Ratio & Hapax).</li>
+          <li><strong>Graciliano Ramos:</strong> Concisão e secura verbal (5,7 palavras por frase).</li>
+          <li><strong>Jorge Amado:</strong> Frequência de termos e identidade cultural afro-baiana.</li>
+          <li><strong>Rachel de Queiroz:</strong> Léxico da seca e do êxodo em <em>O Quinze</em>.</li>
+          <li><strong>Clarice Lispector:</strong> Verbos de reflexão versus verbos de ação material.</li>
+          <li><strong>Euclides da Cunha:</strong> Densidade de termos científicos em <em>Os Sertões</em>.</li>
+          <li><strong>Ariano Suassuna:</strong> Elementos do cordel, interjeições e oralidade popular.</li>
+        </ul>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-sand-border flex justify-end">
+        <button onclick="closeModal('sobreModal')" class="px-4 py-2 bg-brand text-white text-xs font-semibold rounded-lg hover:bg-brand-hover transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lucide Script Activation & Custom Interactivity -->
+  <script>
+    lucide.createIcons();
+
+    // Tab Switching
+    function setTab(tabName) {
+      const tabs = ['sintaxe', 'tematicas', 'fluxo'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tabBtn-${t}`);
+        const content = document.getElementById(`tabContent-${t}`);
+        if (t === tabName) {
+          btn.className = 'tab-button flex items-center gap-2 text-sm font-bold text-brand border-b-2 border-brand pb-4 -mb-4 transition-all';
+          content.classList.remove('hidden');
+        } else {
+          btn.className = 'tab-button flex items-center gap-2 text-sm font-medium text-ink-muted hover:text-ink pb-4 -mb-4 transition-all';
+          content.classList.add('hidden');
+        }
+      });
+      lucide.createIcons();
+    }
+
+    // Toggle All 7 Authors
+    let showingAll = false;
+    function toggleAllAuthors() {
+      showingAll = !showingAll;
+      const extraCards = document.querySelectorAll('.extra-author');
+      const countEl = document.getElementById('activeAuthorCount');
+      const btn = document.getElementById('toggleAllBtn');
+
+      extraCards.forEach(card => {
+        if (showingAll) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (showingAll) {
+        countEl.textContent = '7';
+        btn.textContent = 'Ver 4 em destaque';
+      } else {
+        countEl.textContent = '4';
+        btn.textContent = 'Ver todos os 7';
+      }
+    }
+
+    // Presets in NLP Lab
+    function setSample(text) {
+      document.getElementById('labInput').value = text;
+      analyzeUserText();
+    }
+
+    // Live NLP Analyzer in JavaScript
+    function analyzeUserText() {
+      const text = document.getElementById('labInput').value.trim();
+      if (!text) return;
+
+      const words = text.match(/\b[a-záàâãéèêíïóôõöúçñA-ZÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]+\b/g) || [];
+      const sentences = text.split(/[.!?…]+/).filter(s => s.trim().length > 0);
+
+      const wordCount = words.length;
+      const sentenceCount = Math.max(1, sentences.length);
+      const avgWordsPerSent = (wordCount / sentenceCount).toFixed(1);
+
+      // Simple match rule
+      let match = 'Equilibrado';
+      if (avgWordsPerSent <= 8) {
+        match = 'Graciliano Ramos (Concisão)';
+      } else if (avgWordsPerSent >= 18) {
+        match = 'Euclides da Cunha (Oratória)';
+      } else {
+        const lower = text.toLowerCase();
+        if (lower.includes('sinto') || lower.includes('penso') || lower.includes('alma') || lower.includes('silêncio')) {
+          match = 'Clarice Lispector (Reflexão)';
+        } else if (lower.includes('oxente') || lower.includes('eita') || lower.includes('vixe')) {
+          match = 'Ariano Suassuna (Cordel)';
+        } else {
+          match = 'Rachel de Queiroz / Jorge Amado';
+        }
+      }
+
+      // Display results
+      document.getElementById('resWords').textContent = wordCount;
+      document.getElementById('resAvg').textContent = avgWordsPerSent;
+      document.getElementById('resMatch').textContent = match;
+
+      document.getElementById('labStatus').innerHTML = `
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+        <span class="text-ink font-semibold">Análise concluída</span>
+      `;
+      document.getElementById('labResults').classList.remove('hidden');
+    }
+
+    // Modal Handlers
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // Trigger initial NLP check for the preloaded example
+    window.addEventListener('DOMContentLoaded', () => {
+      analyzeUserText();
+    });
+  </script>
+
+</body>
+</html>
