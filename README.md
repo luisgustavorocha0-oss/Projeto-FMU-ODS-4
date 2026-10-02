@@ -39,8 +39,8 @@ Utilizando técnicas de estilometria computacional, o projeto comprova e ilustra
 
 ### 1. Clonar o Repositório
 ```bash
-git clone https://github.com/SEU-USUARIO/dashboard-literario.git
-cd dashboard-literario
+git clone https://github.com/luisgustavorocha0-oss/Projeto-FMU-ODS-4.git
+cd Projeto-FMU-ODS-4
 ```
 
 ### 2. Instalar Dependências
